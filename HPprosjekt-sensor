@@ -1,0 +1,72 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Nov  5 10:39:14 2020
+
+@author: trym
+"""
+# from sense_hat import SenseHat
+from time import sleep
+import time
+from datetime import datetime
+from sense_hat import SenseHat
+from csv import writer
+
+#%% Variabler
+timestr = time.strftime("%d%m%y-%H.%M.%S")
+sense = SenseHat()
+N = 20
+
+#%% funksjoner
+
+        
+        
+def average_pressure():
+    pressure_sum = 0
+    for _ in range(0, N):
+        pressure_sum += round(sense.get_pressure(),4)
+        sleep(0.01)
+    
+    pressure_avg = pressure_sum / N
+    return(pressure_avg)
+    
+def average_temp():
+    temp_sum = 0
+    for i in range(0,N):
+        temp_sum += sense.temp
+        sleep(0.01)
+        
+    temp_avg = temp_sum / N
+    
+    return(temp_avg)
+
+
+def average_humid():
+    humid_sum = 0
+    for e in range(0, N):
+        humid_sum += round(sense.get_humidity())
+        sleep(0.01)
+        
+    humid_avg = humid_sum / N
+    return(humid_avg)
+
+def get_all_data():
+    sense_data = []
+    sense_data.append(datetime.now())
+    sense_data.append(average_humid())
+    sense_data.append(average_pressure())
+    sense_data.append(average_temp())
+    return(sense_data)
+    
+        
+#%% Raspberry True loop
+while True:
+    with open("data.csv", "w", newline="") as file:
+        data_writer = writer(file)
+        data_writer.writerow(["datetime","humidity", "pressure", "temperature"])
+        while True:
+            data = get_all_data()
+            data_writer.writerow(data)
+            
+    
+    

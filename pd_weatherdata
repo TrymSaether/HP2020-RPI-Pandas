@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Nov 20 09:55:00 2020
+
+@author: trym
+"""
+import pandas as pd
+import matplotlib.pyplot as plt
+
+
+df = pd.read_csv("/Users/trym/weatherdata1_4.csv", sep=",", index_col="datetime")
+df["pressure"] = df["pressure"]/100
+df_okt = df.plot(rot=90, legend=1)

@@ -1,0 +1,13 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Nov 18 13:42:54 2020
+
+@author: trym
+"""
+
+After=multi-user.target
+
+ExecStart=sudo python3 home/trym_johnsen/hovedprosjekt/logger6.py
+
+WantedBy=multi-user.target
